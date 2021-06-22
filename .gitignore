@@ -3,6 +3,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,macos,linux,zsh
 
 my_settings.py
+db_uploader.py
+csv
 
 ### Linux ###
 *~
@@ -199,7 +201,6 @@ Thumbs.db
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
