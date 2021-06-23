@@ -6,24 +6,25 @@ class User(models.Model):
     image      = models.CharField(max_length=200)
     is_deleted = models.BooleanField(default=False)
     deleted_at = models.DateTimeField(null=True)
+    identifier = models.CharField(max_length=45)
     like       = models.ManyToManyField('products.Product', through='Like')
 
     class Meta:
         db_table = 'users'
 
 class Expert(models.Model):
+    name         = models.CharField(max_length=45)
     introduction = models.CharField(max_length=200)
     image        = models.CharField(max_length=200)
     created_at   = models.DateTimeField(auto_now_add=True)
     seller_info  = models.OneToOneField('SellerInfo', on_delete=models.CASCADE)
     user         = models.OneToOneField('User', on_delete=models.CASCADE)
-    position     = models.OneToOneField('Position', on_delete=models.CASCADE)
+    position     = models.ForeignKey('Position', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'experts'
 
 class SellerInfo(models.Model):
-    name         = models.CharField(max_length=45)
     email        = models.EmailField()
     address      = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=45)
