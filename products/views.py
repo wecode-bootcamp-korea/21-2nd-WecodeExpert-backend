@@ -34,7 +34,6 @@ class ProductView(View):
             'hashtag'       : [hashtag.name for hashtag in product.expert.hashtag_set.all()]
         } for product in products] 
 
-        
         count = len(product_info)
 
         return JsonResponse(
@@ -68,10 +67,13 @@ class ExpertView(View):
             'hashtag'      : [hashtag.name for hashtag in expert.hashtag_set.all()]
         } for expert in experts]
         
+        count = len(expert_info)
+
         return JsonResponse(
             {
                 'message' : 'SUCCESS',
-                'result'  : expert_info[offset:limit]
+                'result'  : expert_info[offset:limit],
+                'count'   : count
         }, status=200)
 
 class ProductDetailView(View):

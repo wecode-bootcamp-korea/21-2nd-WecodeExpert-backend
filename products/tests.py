@@ -158,7 +158,8 @@ class ExpertTest(TestCase):
                         'introduction' : 'python-django',
                         'hashtag'      : ['#python']
                     }
-                ]
+                ],
+                'count' : 1
             })
         self.assertEqual(response.status_code, 200)
 
@@ -254,9 +255,9 @@ class DetailTest(TestCase):
             })
         self.assertEqual(response.status_code, 200)
 
-        def test_detailview_invalid_product(self):
-            client = Client()
-            response = client.get('/products/0')
+    def test_detailview_invalid_product(self):
+        client = Client()
+        response = client.get('/products/0')
 
-            self.assertEqual(response.json(), {'message' : 'INVALID_PRODUCT'})
-            self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {'message' : 'INVALID_PRODUCT'})
+        self.assertEqual(response.status_code, 400)
