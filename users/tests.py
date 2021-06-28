@@ -1,7 +1,7 @@
 import jwt
+from unittest.mock import MagicMock, patch
 
 from django.test import TestCase, Client
-from unittest.mock import MagicMock, patch
 
 from users.models import User
 from wecode_expert.settings import SECRET_KEY, ALGORITHM
