@@ -2,7 +2,7 @@ from django.views     import View
 from django.http      import JsonResponse
 from django.db.models import Q
 
-from .models          import Product
+from .models          import Product, Review
 from users.models     import Expert
 
 class ProductView(View):
@@ -33,7 +33,7 @@ class ProductView(View):
             'expert_image'  : product.expert.image,
             'hashtag'       : [hashtag.name for hashtag in product.expert.hashtag_set.all()]
         } for product in products] 
-
+        
         count = len(product_info)
 
         return JsonResponse(
@@ -100,4 +100,26 @@ class ProductDetailView(View):
             {
                 'message' : 'SUCCESS',
                 'result'  : product_info
+        }, status=200)
+
+class ProductReviewView(View):
+    def get(self, request, product_id):
+        if not Product.objects.filter(id=product_id).exists():
+            return JsonResponse({'message' : 'INVALID_PRODUCT'}, status=400)
+
+        reviews = Review.objects.select_related('product', 'user').filter(product_id=product_id)
+
+        review_info = [{
+            'product_id'   : review.product.id,
+            'review_id'    : review.id,
+            'user_id'      : review.user.id,
+            'user_email'   : review.user.email,
+            'content'      : review.content,
+            'star_rating'  : int(review.star_rating)
+        } for review in reviews] 
+
+        return JsonResponse(
+            {
+                'message' : 'SUCCESS', 
+                'result' : review_info
         }, status=200)

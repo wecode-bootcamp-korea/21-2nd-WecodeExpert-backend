@@ -1,65 +1,66 @@
+from django.http import response
 from django.test     import TestCase, Client
 
-from .models         import Category, CategoryExpert, Product
+from .models         import Category, CategoryExpert, Product, Review
 from users.models    import HashTag, SellerInfo, Position, User, Expert 
 
 class ProductTest(TestCase):
     def setUp(self):
         Category.objects.create(
-            id = 1,
+            id   = 1,
             name = 'python'
         )
 
         SellerInfo.objects.create(
-            id = 1,
-            email = 'python@gmail.com',
-            address = 'python-1234',
+            id           = 1,
+            email        = 'python@gmail.com',
+            address      = 'python-1234',
             phone_number = '010-1234-5678'
         )
 
         Position.objects.create(
-            id = 1,
+            id   = 1,
             name = 'backend'
         )
         
         User.objects.create(
-            id = 1,
-            is_kakao = 1,
-            email = 'python@gmail.com',
-            image = 'python.url',
+            id         = 1,
+            is_kakao   = 1,
+            email      = 'python@gmail.com',
+            image      = 'python.url',
             is_deleted = 0,
             identifier = 12345,
         )
 
         Expert.objects.create(
-            id = 1,
-            name = 'python',
+            id           = 1,
+            name         = 'python',
             introduction = 'python-django',
-            image = 'python.url',
-            seller_info = SellerInfo.objects.get(id=1),
-            user = User.objects.get(id=1),
-            position = Position.objects.get(id=1)
+            image        = 'python.url',
+            seller_info  = SellerInfo.objects.get(id=1),
+            user         = User.objects.get(id=1),
+            position     = Position.objects.get(id=1)
         )
 
         CategoryExpert.objects.create(
-            id = 1,
+            id       = 1,
             category = Category.objects.get(id=1),
-            expert = Expert.objects.get(id=1)
+            expert   = Expert.objects.get(id=1)
         )
 
         Product.objects.create(
-            id = 1,
-            title = 'python',
-            price = 10000,
-            content = 'django-python',
+            id         = 1,
+            title      = 'python',
+            price      = 10000,
+            content    = 'django-python',
             sell_count = 0,
-            category = Category.objects.get(id=1),
-            expert = Expert.objects.get(id=1)
+            category   = Category.objects.get(id=1),
+            expert     = Expert.objects.get(id=1)
         )
 
         HashTag.objects.create(
-            id = 1,
-            name = '#python',
+            id     = 1,
+            name   = '#python',
             expert = Expert.objects.get(id=1)
         )
 
@@ -74,7 +75,7 @@ class ProductTest(TestCase):
         HashTag.objects.all().delete()
 
     def test_productview_get(self):
-        client = Client()
+        client   = Client()
         response = client.get('/products')
 
         self.assertEqual(response.json(),
@@ -100,39 +101,39 @@ class ProductTest(TestCase):
 class ExpertTest(TestCase):
     def setUp(self):
         Position.objects.create(
-            id = 1,
+            id   = 1,
             name = 'backend'
         )
         
         User.objects.create(
-            id = 1,
-            is_kakao = 1,
-            email = 'python@gmail.com',
-            image = 'python.url',
+            id         = 1,
+            is_kakao   = 1,
+            email      = 'python@gmail.com',
+            image      = 'python.url',
             is_deleted = 0,
             identifier = 12345,
         )
 
         SellerInfo.objects.create(
-            id = 1,
-            email = 'python@gmail.com',
-            address = 'python-1234',
+            id           = 1,
+            email        = 'python@gmail.com',
+            address      = 'python-1234',
             phone_number = '010-1234-5678'
         )
 
         Expert.objects.create(
-            id = 1,
-            name = 'python',
+            id           = 1,
+            name         = 'python',
             introduction = 'python-django',
-            image = 'python.url',
-            seller_info = SellerInfo.objects.get(id=1),
-            user = User.objects.get(id=1),
-            position = Position.objects.get(id=1)
+            image        = 'python.url',
+            seller_info  = SellerInfo.objects.get(id=1),
+            user         = User.objects.get(id=1),
+            position     = Position.objects.get(id=1)
         )
 
         HashTag.objects.create(
-            id = 1,
-            name = '#python',
+            id     = 1,
+            name   = '#python',
             expert = Expert.objects.get(id=1)
         )
 
@@ -144,7 +145,7 @@ class ExpertTest(TestCase):
         HashTag.objects.all().delete()
 
     def test_expertview_get(self):
-        client = Client()
+        client   = Client()
         response = client.get('/products/expert')
 
         self.assertEqual(response.json(),
@@ -166,60 +167,60 @@ class ExpertTest(TestCase):
 class DetailTest(TestCase):
     def setUp(self):
         Category.objects.create(
-            id = 1,
+            id   = 1,
             name = 'python'
         )
 
         SellerInfo.objects.create(
-            id = 1,
-            email = 'python.sell@gmail.com',
-            address = 'python-1234',
+            id           = 1,
+            email        = 'python.sell@gmail.com',
+            address      = 'python-1234',
             phone_number = '010-1234-5678'
         )
 
         Position.objects.create(
-            id = 1,
+            id   = 1,
             name = 'backend'
         )
         
         User.objects.create(
-            id = 1,
-            is_kakao = 1,
-            email = 'python@gmail.com',
-            image = 'python.url',
+            id         = 1,
+            is_kakao   = 1,
+            email      = 'python@gmail.com',
+            image      = 'python.url',
             is_deleted = 0,
             identifier = 12345,
         )
 
         Expert.objects.create(
-            id = 1,
-            name = 'python',
+            id           = 1,
+            name         = 'python',
             introduction = 'python-django',
-            image = 'python.url',
-            seller_info = SellerInfo.objects.get(id=1),
-            user = User.objects.get(id=1),
-            position = Position.objects.get(id=1)
+            image        = 'python.url',
+            seller_info  = SellerInfo.objects.get(id=1),
+            user         = User.objects.get(id=1),
+            position     = Position.objects.get(id=1)
         )
 
         CategoryExpert.objects.create(
-            id = 1,
+            id       = 1,
             category = Category.objects.get(id=1),
-            expert = Expert.objects.get(id=1)
+            expert   = Expert.objects.get(id=1)
         )
 
         Product.objects.create(
-            id = 1,
-            title = 'python',
-            price = 10000,
-            content = 'django-python',
+            id         = 1,
+            title      = 'python',
+            price      = 10000,
+            content    = 'django-python',
             sell_count = 0,
-            category = Category.objects.get(id=1),
-            expert = Expert.objects.get(id=1)
+            category   = Category.objects.get(id=1),
+            expert     = Expert.objects.get(id=1)
         )
 
         HashTag.objects.create(
-            id = 1,
-            name = '#python',
+            id     = 1,
+            name   = '#python',
             expert = Expert.objects.get(id=1)
         )
 
@@ -234,7 +235,7 @@ class DetailTest(TestCase):
         HashTag.objects.all().delete()
 
     def test_detailview_get(self):
-        client = Client()
+        client   = Client()
         response = client.get('/products/1')
 
         self.assertEqual(response.json(),
@@ -256,8 +257,107 @@ class DetailTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_detailview_invalid_product(self):
-        client = Client()
+        client   = Client()
         response = client.get('/products/0')
+
+        self.assertEqual(response.json(), {'message' : 'INVALID_PRODUCT'})
+        self.assertEqual(response.status_code, 400)
+
+class ReviewTest(TestCase):
+    def setUp(self):
+        Category.objects.create(
+            id   = 1,
+            name = 'python'
+        )
+
+        SellerInfo.objects.create(
+            id           = 1,
+            email        = 'python.sell@gmail.com',
+            address      = 'python-1234',
+            phone_number = '010-1234-5678'
+        )
+
+        Position.objects.create(
+            id   = 1,
+            name = 'backend'
+        )
+        
+        User.objects.create(
+            id         = 1,
+            is_kakao   = 1,
+            email      = 'python@gmail.com',
+            image      = 'python.url',
+            is_deleted = 0,
+            identifier = 12345,
+        )
+
+        Expert.objects.create(
+            id           = 1,
+            name         = 'python',
+            introduction = 'python-django',
+            image        = 'python.url',
+            seller_info  = SellerInfo.objects.get(id=1),
+            user         = User.objects.get(id=1),
+            position     = Position.objects.get(id=1)
+        )
+
+        CategoryExpert.objects.create(
+            id       = 1,
+            category = Category.objects.get(id=1),
+            expert   = Expert.objects.get(id=1)
+        )
+
+        Product.objects.create(
+            id         = 1,
+            title      = 'python',
+            price      = 10000,
+            content    = 'django-python',
+            sell_count = 0,
+            category   = Category.objects.get(id=1),
+            expert     = Expert.objects.get(id=1)
+        )
+
+        Review.objects.create(
+            id          = 1,
+            content     = 'abc',
+            star_rating = 5,
+            user_id     = 1,
+            product_id  = 1
+        )
+
+    def tearDown(self):
+        Category.objects.all().delete()
+        SellerInfo.objects.all().delete()
+        Position.objects.all().delete()
+        User.objects.all().delete()
+        Expert.objects.all().delete()
+        CategoryExpert.objects.all().delete()
+        Product.objects.all().delete()
+        Review.objects.all().delete()
+    
+    def test_reviewview_get(self):
+        client   = Client()
+        response = client.get('/products/1/review')
+
+        self.assertEqual(response.json(), 
+            {
+                'message' : 'SUCCESS',
+                'result' : [
+                    {
+                        'product_id'  : 1,
+                        'review_id'    : 1,
+                        'user_id'      : 1,
+                        'user_email'   : 'python@gmail.com',
+                        'content'      : 'abc',
+                        'star_rating' : 5
+                    }
+                ]
+            })
+        self.assertEqual(response.status_code, 200)
+
+    def test_reviewview_invalid_product(self):
+        client   = Client()
+        response = client.get('/products/0/review')
 
         self.assertEqual(response.json(), {'message' : 'INVALID_PRODUCT'})
         self.assertEqual(response.status_code, 400)
