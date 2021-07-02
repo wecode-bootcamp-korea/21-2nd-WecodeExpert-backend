@@ -84,9 +84,11 @@ class ProductDetailView(View):
         product = Product.objects.select_related('expert', 'expert__position', 'expert__seller_info').get(id=product_id)
 
         product_info = {
+            'product_id'   : product.id,
             'expert_name'  : product.expert.name,
             'expert_type'  : product.expert.position.name,
             'expert_image' : product.expert.image,
+            'introduce'    : product.expert.introduction,
             'email'        : product.expert.seller_info.email,
             'address'      : product.expert.seller_info.address,
             'phone_number' : product.expert.seller_info.phone_number,

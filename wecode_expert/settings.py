@@ -153,3 +153,8 @@ CORS_ALLOW_HEADERS = (
 )
 
 LOGGING = LOGGING
+
+GRAPH_MODELS = {
+    'all_applications' : True,
+    'group_models' : True,
+}
