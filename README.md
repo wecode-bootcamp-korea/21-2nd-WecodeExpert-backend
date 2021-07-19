@@ -48,7 +48,6 @@ https://www.youtube.com/watch?v=NDgbTXL3dcQ
 - 상품,유저정보 테이블 활용하여 CRUD Create 및 filter로 결제기능 구현.
 - AWS : EC2,RDS서버구축 및 배포작업 담당.
 - s3를 활용한 사진 업로드
-- docker 구축
  
 <br>
 
